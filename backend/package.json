@@ -1,0 +1,51 @@
+{
+  "name": "opms",
+  "version": "1.0.0",
+  "description": "App backend",
+  "main": "index.js",
+  "scripts": {
+    "start": "env TZ='UTC' node index.js",
+    "dev": "env TZ='UTC' nodemon index.js",
+    "test": "mocha tests --timeout=15000",
+    "eslint": "eslint './app/**/*.js'",
+    "migrate:run": "knex migrate:latest",
+    "migrate:rollback": "knex migrate:rollback",
+    "seed:run": "knex seed:run"
+  },
+  "author": "Tien Do",
+  "private": true,
+  "dependencies": {
+    "async": "^3.2.0",
+    "axios": "^0.21.1",
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dayjs": "^1.9.7",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "handlebars": "^4.7.7",
+    "joi": "^17.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.21.16",
+    "lodash": "^4.17.21",
+    "mysql": "^2.18.1",
+    "node-schedule": "^2.0.0",
+    "nodemailer": "^6.4.16",
+    "objection": "^2.2.1",
+    "request": "^2.88.2",
+    "shortid": "^2.2.15",
+    "slug": "^3.3.0",
+    "uuid": "^8.3.2",
+    "winston": "^3.3.3",
+    "xlsx": "^0.16.9"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "mocha": "^8.0.1",
+    "nodemon": "^2.0.4",
+    "sinon": "^9.0.2"
+  }
+}

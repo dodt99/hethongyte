@@ -1,0 +1,11 @@
+/node_modules
+.vscode
+.sonarlint
+.data
+
+.npm
+
+.eslintcache
+
+.env
+env.js
