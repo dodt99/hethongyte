@@ -9,8 +9,8 @@ import useGetPatients from '../../hooks/useGetPatients';
 import FilterPatient from './FilterPatient';
 import genderEnum from '../../enums/gender';
 import { formatDate } from '../../helpers/date';
-import AddPatient from './AddPatient';
 import UpdatePatient from './UpdatePatient';
+import userStatus from '../../enums/userStatus';
 
 const PatientList = () => {
   const [keyword, setKeyword] = useState(null);
@@ -62,6 +62,7 @@ const PatientList = () => {
             ID
           </TableSortLabel>
         </TableCell>
+        <TableCell size="medium" align="left">Code</TableCell>
         <TableCell size="medium" align="left">
           <TableSortLabel
             active={sortBy === 'name'}
@@ -71,12 +72,15 @@ const PatientList = () => {
             Name
           </TableSortLabel>
         </TableCell>
-        <TableCell size="medium" align="left">Gender</TableCell>
-        <TableCell size="medium" align="left">Birthday</TableCell>
-        <TableCell size="medium" align="left">Telephone</TableCell>
-        <TableCell size="medium" align="left">Address</TableCell>
-        <TableCell size="medium" align="left">Created At</TableCell>
-        <TableCell size="medium" align="left">Note</TableCell>
+        <TableCell size="medium" align="left">Email</TableCell>
+        <TableCell size="medium" align="left">Giới tính</TableCell>
+        <TableCell size="medium" align="left">Ngày sinh</TableCell>
+        <TableCell size="medium" align="left">Số ĐT</TableCell>
+        <TableCell size="medium" align="left">Địa chỉ</TableCell>
+        <TableCell size="medium" align="left">Nghề nghiệp</TableCell>
+        <TableCell size="medium" align="left">Ngày vào</TableCell>
+        <TableCell size="medium" align="left">Trạng thái</TableCell>
+        <TableCell size="medium" align="left">Ghi chú</TableCell>
         <TableCell size="medium" align="left" />
       </TableRow>
     </TableHead>
@@ -93,10 +97,6 @@ const PatientList = () => {
             setKeyword={setKeyword}
           />
         </Grid>
-
-        <Grid item>
-          <AddPatient />
-        </Grid>
       </Grid>
 
       <Grid item>
@@ -112,13 +112,17 @@ const PatientList = () => {
               {data && data.patients.map((patient) => (
                 <TableRow key={patient.id}>
                   <TableCell size="medium" align="left">{patient.id}</TableCell>
+                  <TableCell size="medium" align="left">{patient.code || ''}</TableCell>
                   <TableCell size="medium" align="left">{patient.name}</TableCell>
+                  <TableCell size="medium" align="left">{patient.email}</TableCell>
                   <TableCell size="medium" align="left">{genderEnum.getTitle(patient.gender)}</TableCell>
                   <TableCell size="medium" align="left">{patient.birthday && formatDate(patient.birthday)}</TableCell>
                   <TableCell size="medium" align="left">{patient.tel}</TableCell>
                   <TableCell size="medium" align="left">{patient.address}</TableCell>
+                  <TableCell size="medium" align="left">{patient.job || ''}</TableCell>
                   <TableCell size="medium" align="left">{formatDate(patient.created_at)}</TableCell>
-                  <TableCell size="medium" align="left">{patient.note}</TableCell>
+                  <TableCell size="medium" align="left">{userStatus.getTitle(patient.status)}</TableCell>
+                  <TableCell size="medium" align="left">{patient.note || ''}</TableCell>
                   <TableCell size="medium" align="center">
                     <UpdatePatient patient={patient} />
                   </TableCell>

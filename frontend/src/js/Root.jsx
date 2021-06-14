@@ -16,8 +16,11 @@ import { AppStateContext, AppDispatchContext } from './AppContext';
 
 import PrivateRoute from './PrivateRoute';
 import SignIn from './pages/auth/SignIn';
+import SignUp from './pages/auth/SignUp';
 import ErrorPage from './pages/error/ErrorPage';
 import Patients from './pages/patient/Patients';
+import Employees from './pages/employee/Employees';
+import Positions from './pages/setting/Positions';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -36,8 +39,12 @@ const Root = () => {
       <div>
         <Switch>
           <Route path="/sign-in" component={SignIn} />
+          <Route path="/sign-up" component={SignUp} />
+
           <PrivateRoute exact path="/" component={() => (<Redirect to="/patients" />)} />
           <PrivateRoute path="/patients" component={Patients} />
+          <PrivateRoute path="/employees" component={Employees} />
+          <PrivateRoute path="/setting/positions" component={Positions} />
 
           <Route path="*" exact component={ErrorPage} />
         </Switch>

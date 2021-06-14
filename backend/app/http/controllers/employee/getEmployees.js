@@ -1,7 +1,8 @@
 const Joi = require('joi');
 
-const patientService = require('../../services/patient');
+const employeeService = require('../../services/employee');
 const gender = require('../../../enums/gender');
+
 const { abort } = require('../../../helpers/error');
 const userStatus = require('../../../enums/userStatus');
 
@@ -13,8 +14,7 @@ async function validation(params) {
       keyword: Joi.string().allow(null),
       gender: Joi.number().valid(...gender.getValues()).allow(null),
       status: Joi.number().valid(...userStatus.getValues()).allow(null),
-      sortBy: Joi.valid('id', 'name').allow(null),
-      sortType: Joi.valid('desc', 'asc').allow(null),
+      positionId: Joi.number().integer().min(1).allow(null),
     });
 
     return await schema.validateAsync(params);
@@ -23,21 +23,20 @@ async function validation(params) {
   }
 }
 
-async function getPatients(req, res) {
+async function getEmployees(req, res) {
   const params = {
     limit: req.query.limit,
     offset: req.query.offset,
     keyword: req.query.keyword,
     gender: req.query.gender,
     status: req.query.status,
-    sortBy: req.query.sortBy,
-    sortType: req.query.sortType,
+    positionId: req.query.positionId,
   };
 
   await validation(params);
 
-  const responseData = await patientService.getPatients(params);
+  const responseData = await employeeService.getEmployees(params);
   return res.status(200).send(responseData);
 }
 
-module.exports = getPatients;
+module.exports = getEmployees;

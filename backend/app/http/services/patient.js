@@ -1,33 +1,23 @@
+const role = require('../../enums/role');
 const { abort } = require('../../helpers/error');
-const { Patient } = require('../../models');
+const { User } = require('../../models');
 
 // eslint-disable-next-line no-control-regex
 const hasUnicode = (s) => /[^\u0000-\u007f]/.test(s);
 
-exports.addPatient = async ({
-  name, gender, birthday, tel, address, note,
-}) => {
-  try {
-    await Patient.query().insert({
-      name, gender, birthday, tel, address, note,
-    });
-  } catch (error) {
-    return abort(500, 'Can not add new patient');
-  }
-
-  return '';
-};
-
 exports.getPatients = async ({
-  limit, offset, keyword, gender, sortBy, sortType,
+  limit, offset, keyword, gender, status, sortBy, sortType,
 }) => {
-  let patients = Patient.query()
-    .select('id', 'name', 'gender', 'birthday', 'tel', 'address', 'note', 'created_at')
+  let patients = User.query()
+    .select('id', 'code', 'email', 'name', 'gender', 'birthday', 'address', 'tel', 'status', 'note', 'created_at')
+    .where('role', role.PATIENT)
     .orderBy(sortBy, sortType)
     .limit(limit)
     .offset(offset);
 
-  let total = Patient.query().count('id');
+  let total = User.query()
+    .where('role', role.PATIENT)
+    .count('id');
 
   if (keyword) {
     patients.where((builder) => {
@@ -37,6 +27,8 @@ exports.getPatients = async ({
       } else {
         builder
           .orWhere('name', 'like', `%${keyword}%`)
+          .orWhere('code', 'like', `%${keyword}%`)
+          .orWhere('email', 'like', `%${keyword}%`)
           .orWhere('tel', 'like', `%${keyword}%`);
       }
     });
@@ -58,6 +50,11 @@ exports.getPatients = async ({
     total.where({ gender });
   }
 
+  if (status) {
+    patients.where({ status });
+    total.where({ status });
+  }
+
   patients = await patients;
   [{ 'count(`id`)': total }] = await total;
 
@@ -70,15 +67,15 @@ exports.getPatients = async ({
 };
 
 exports.updatePatient = async ({
-  patientId, name, gender, birthday, tel, address, note,
+  patientId, code, name, gender, birthday, tel, address, note, job, status,
 }) => {
-  const patient = await Patient.query().findById(patientId);
+  const patient = await User.query().findById(patientId);
   if (!patient) return abort(404, 'Patient is not exists');
 
   try {
     await patient.$query()
       .update({
-        name, gender, birthday, tel, address, note,
+        code, name, gender, birthday, tel, address, note, job, status,
       });
   } catch (error) {
     return abort(500, 'Can not update patient');

@@ -86,7 +86,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'src/assets/index.html',
-      favicon: 'src/assets/img/favicon.ico',
     }),
     new HtmlWebpackPlugin({
       filename: 'robots.txt',
