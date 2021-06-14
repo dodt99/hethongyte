@@ -16,6 +16,7 @@ import { api } from '../../helpers/axios';
 import patientSchema from '../../validators/patient';
 import genderEnum from '../../enums/gender';
 import { formatLocalDate } from '../../helpers/date';
+import userStatus from '../../enums/userStatus';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,16 +53,20 @@ const UpdatePatient = ({ patient }) => {
     tel,
     address,
     note,
+    code,
+    status,
   } = watch();
 
   const { mutate: updatePatient, isLoading } = useMutation(async () => {
     const responseData = await api.put(`/patients/${patient.id}`, {
       name,
+      code,
       gender,
       birthday: (birthday && formatLocalDate(birthday)) || null,
       tel: tel.trim() || null,
       address: address.trim() || null,
       note: note.trim() || null,
+      status,
     });
     return responseData;
   }, {
@@ -97,15 +102,28 @@ const UpdatePatient = ({ patient }) => {
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
+                  <TextField
+                    label="Code"
+                    name="code"
+                    fullWidth
+                    defaultValue={patient.code}
+                    variant="outlined"
+                    inputRef={register}
+                    error={!!errors.code}
+                    helperText={errors.code ? errors.code.message : ''}
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
                   <FormControl
                     variant="outlined"
                     fullWidth
                     error={!!errors.gender}
                   >
-                    <InputLabel>Gender</InputLabel>
+                    <InputLabel>Giới tính</InputLabel>
                     <Controller
                       as={(
-                        <Select label="Gender">
+                        <Select label="Giới tính">
                           {genderEnum.toArray().map((s) => (
                             <MenuItem key={s.value} value={s.value}>
                               {genderEnum.getTitle(s.value)}
@@ -127,7 +145,7 @@ const UpdatePatient = ({ patient }) => {
                       <KeyboardDatePicker
                         {...props}
                         inputVariant="outlined"
-                        label="Birthday"
+                        label="Ngày sinh"
                         placeholder="dd-mm-yyyy"
                         name="birthday"
                         autoOk
@@ -148,7 +166,7 @@ const UpdatePatient = ({ patient }) => {
 
                 <Grid item xs={12} sm={6}>
                   <TextField
-                    label="Telephone"
+                    label="Số ĐT"
                     name="tel"
                     defaultValue={patient.tel}
                     fullWidth
@@ -159,9 +177,35 @@ const UpdatePatient = ({ patient }) => {
                   />
                 </Grid>
 
+                <Grid item xs={12} sm={6}>
+                  <FormControl
+                    variant="outlined"
+                    fullWidth
+                    error={!!errors.status}
+                    defaultValue={patient.status}
+                  >
+                    <InputLabel>Trạng thái</InputLabel>
+                    <Controller
+                      as={(
+                        <Select label="Trạng thái">
+                          {userStatus.toArray().map((s) => (
+                            <MenuItem key={s.value} value={s.value}>
+                              {userStatus.getTitle(s.value)}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      )}
+                      name="status"
+                      control={control}
+                      defaultValue={patient.status}
+                    />
+                    <FormHelperText>{errors.status ? errors.status.message : ''}</FormHelperText>
+                  </FormControl>
+                </Grid>
+
                 <Grid item xs={12}>
                   <TextField
-                    label="Address"
+                    label="Địa chỉ"
                     defaultValue={patient.address}
                     name="address"
                     fullWidth
@@ -169,6 +213,19 @@ const UpdatePatient = ({ patient }) => {
                     inputRef={register}
                     error={!!errors.address}
                     helperText={errors.address ? errors.address.message : ''}
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <TextField
+                    label="Nghề nghiệp"
+                    defaultValue={patient.job}
+                    name="job"
+                    fullWidth
+                    variant="outlined"
+                    inputRef={register}
+                    error={!!errors.job}
+                    helperText={errors.job ? errors.job.message : ''}
                   />
                 </Grid>
 

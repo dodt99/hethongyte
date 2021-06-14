@@ -13,10 +13,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import OvertimeIcon from '@material-ui/icons/AddAlarm';
 import AssessmentIcon from '@material-ui/icons/Assessment';
-import WatchLaterIcon from '@material-ui/icons/WatchLater';
 import GroupIcon from '@material-ui/icons/Group';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 import { useAppStateContext, useAppStateDispatchContext } from '../../AppContext';
 
@@ -64,19 +65,24 @@ const TABS = [
     icon: <AssessmentIcon color="secondary" />,
   },
   {
+    url: '/users',
+    title: 'Lịch Khám',
+    icon: <CalendarTodayIcon color="secondary" />,
+  },
+  {
     url: '/patients',
-    title: 'Patient',
+    title: 'Bệnh Nhân',
     icon: <GroupIcon color="secondary" />,
   },
   {
-    url: '/attendances',
-    title: 'Attendance',
-    icon: <WatchLaterIcon color="secondary" />,
+    url: '/employees',
+    title: 'Nhân Viên',
+    icon: <SupervisedUserCircleIcon color="secondary" />,
   },
   {
-    url: '/users',
-    title: 'Users',
-    icon: <OvertimeIcon color="secondary" />,
+    url: '/setting/positions',
+    title: 'Cài đặt',
+    icon: <SettingsIcon color="secondary" />,
   },
 ];
 

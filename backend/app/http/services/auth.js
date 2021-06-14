@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt');
 const { generate } = require('../../helpers/jwt');
 const { User } = require('../../models');
 const { abort } = require('../../helpers/error');
+const userStatus = require('../../enums/userStatus');
+const role = require('../../enums/role');
 
 const saltRounds = 10;
 
@@ -16,7 +18,9 @@ exports.signIn = async ({ email, password }) => {
   return { accessToken };
 };
 
-exports.signUp = async ({ email, password, fullName }) => {
+exports.signUp = async ({
+  email, password, name, gender, tel, birthday, address, job,
+}) => {
   const user = await User.query().findOne({ email });
 
   if (user) {
@@ -26,14 +30,22 @@ exports.signUp = async ({ email, password, fullName }) => {
   try {
     const hashPassword = await bcrypt.hash(password, saltRounds);
 
-    await User.query().insert({
+    const newUser = await User.query().insertAndFetch({
       email,
       password: hashPassword,
-      full_name: fullName,
-      task_count: 0,
+      name,
+      gender,
+      tel,
+      birthday,
+      address,
+      job,
+      status: userStatus.ACTIVE,
+      role: role.PATIENT,
     });
 
-    return '';
+    const accessToken = await generate({ userId: newUser.id });
+
+    return { accessToken };
   } catch (error) {
     return abort(500, 'Can not sign up');
   }

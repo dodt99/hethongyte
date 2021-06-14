@@ -15,6 +15,7 @@ const schema = yup.object().shape({
   birthday: yup.date().nullable(),
   address: yup.string().max(127).nullable(),
   note: yup.string().nullable(),
+  code: yup.string().required(),
 });
 
 export default schema;

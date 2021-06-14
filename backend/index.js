@@ -22,6 +22,9 @@ app.use(bodyParser.json());
 
 app.use(middlewares.me);
 
+app.use('/api/patients', middlewares.auth);
+app.use('/api/employees', middlewares.auth);
+
 Object.keys(routes).map((route) => app.use('/api', routes[route]));
 
 app.use((req, res) => {
