@@ -21,6 +21,7 @@ import ErrorPage from './pages/error/ErrorPage';
 import Patients from './pages/patient/Patients';
 import Employees from './pages/employee/Employees';
 import Positions from './pages/setting/Positions';
+import Calendar from './pages/calendar/Calendar';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,9 +42,10 @@ const Root = () => {
           <Route path="/sign-in" component={SignIn} />
           <Route path="/sign-up" component={SignUp} />
 
-          <PrivateRoute exact path="/" component={() => (<Redirect to="/patients" />)} />
+          <PrivateRoute exact path="/" component={() => (<Redirect to="/calendar" />)} />
           <PrivateRoute path="/patients" component={Patients} />
           <PrivateRoute path="/employees" component={Employees} />
+          <PrivateRoute path="/calendar" component={Calendar} />
           <PrivateRoute path="/setting/positions" component={Positions} />
 
           <Route path="*" exact component={ErrorPage} />

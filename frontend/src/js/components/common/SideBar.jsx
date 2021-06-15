@@ -20,6 +20,9 @@ import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import SettingsIcon from '@material-ui/icons/Settings';
 
 import { useAppStateContext, useAppStateDispatchContext } from '../../AppContext';
+import roleEnum from '../../enums/role';
+import useMe from '../../hooks/useMe';
+import { checkRole } from '../../helpers/permission';
 
 const DRAWER_WIDTH = 240;
 
@@ -61,26 +64,31 @@ const useStyles = makeStyles((theme) => ({
 const TABS = [
   {
     url: '/dashboards',
+    roles: [roleEnum.ADMIN],
     title: 'Dashboard',
     icon: <AssessmentIcon color="secondary" />,
   },
   {
-    url: '/users',
+    url: '/calendar',
+    roles: [roleEnum.ADMIN, roleEnum.EMPLOYEE, roleEnum.PATIENT],
     title: 'Lịch Khám',
     icon: <CalendarTodayIcon color="secondary" />,
   },
   {
     url: '/patients',
+    roles: [roleEnum.ADMIN],
     title: 'Bệnh Nhân',
     icon: <GroupIcon color="secondary" />,
   },
   {
     url: '/employees',
+    roles: [roleEnum.ADMIN],
     title: 'Nhân Viên',
     icon: <SupervisedUserCircleIcon color="secondary" />,
   },
   {
     url: '/setting/positions',
+    roles: [roleEnum.ADMIN],
     title: 'Cài đặt',
     icon: <SettingsIcon color="secondary" />,
   },
@@ -89,6 +97,8 @@ const TABS = [
 const SideBar = () => {
   const classes = useStyles();
   const history = useHistory();
+
+  const { data: me, isLoading: loadingRole } = useMe();
 
   const { openSideBar } = useAppStateContext();
   const { dispatch } = useAppStateDispatchContext();
@@ -110,20 +120,23 @@ const SideBar = () => {
       <Divider />
 
       {TABS.map((tab) => (
-        <Button
-          onClick={() => history.push(tab.url)}
-          classes={{ root: classes.typography }}
-          key={tab.url}
-        >
-          <ListItem>
-            <ListItemIcon>
-              {tab.icon}
-            </ListItemIcon>
+        loadingRole || checkRole(tab.roles, me.role)
+          ? (
+            <Button
+              onClick={() => history.push(tab.url)}
+              classes={{ root: classes.typography }}
+              key={tab.url}
+            >
+              <ListItem>
+                <ListItemIcon>
+                  {tab.icon}
+                </ListItemIcon>
 
-            <ListItemText primary={tab.title} primaryTypographyProps={{ variant: 'h5' }} />
-          </ListItem>
-        </Button>
-      ))}
+                <ListItemText primary={tab.title} primaryTypographyProps={{ variant: 'h5' }} />
+              </ListItem>
+            </Button>
+          )
+          : null))}
 
     </Drawer>
   );

@@ -9,7 +9,7 @@ dayjs.extend(isoWeeksInYear);
 
 export const dayjsFormat = dayjs.utc;
 export const formatDateTime = (dateTime) => dayjsFormat(dateTime).utc().format('HH:mm DD/MM/YYYY');
-export const formatLocalDateTime = (dateTime) => dayjs(dateTime).format('HH:mm DD/MM/YYYY');
+export const formatLocalDateTime = (dateTime) => dayjs(dateTime).format('YYYY/MM/DD HH:mm');
 export const formatDate = (dateTime) => dayjsFormat(dateTime).utc().format('DD/MM/YYYY');
 export const formatDateDayMonth = (dateTime) => dayjs(dateTime).format('DD/MM');
 export const formatDateMonthYear = (dateTime) => dayjs(dateTime).format('MM/YYYY');

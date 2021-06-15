@@ -11,6 +11,9 @@ exports.formatYearMonthDay = (dateTime) => this.dayjsFormat(dateTime).utc().form
 exports.formatDayMonthYear = (dateTime) => this.dayjsFormat(dateTime).utc().format('DD/MM/YYYY');
 exports.formatYearMonth = (dateTime) => this.dayjsFormat(dateTime).format('YYYY/MM');
 
+exports.formatTimestamp = (dateTime) => this.dayjsFormat(dateTime).utc().format('YYYYMMDDHHmmss');
+exports.formatLocalDateTime = (dateTime) => this.dayjsFormat(dateTime).local().format('DD/MM/YYYY HH:mm');
+
 exports.getYear = (dateTime) => new Date(dateTime).getFullYear();
 exports.getMonth = (dateTime) => new Date(dateTime).getMonth();
 exports.getDate = (dateTime) => new Date(dateTime).getDate();
