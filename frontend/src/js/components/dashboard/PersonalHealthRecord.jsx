@@ -76,6 +76,18 @@ const PersonalHelthRecord = ({ userId }) => {
                         <TableCell size="medium" align="left">Chiều cao</TableCell>
                       </TableRow>
                     </TableHead>
+
+                    <TableBody>
+                      {user.vitalSigns.map((sign) => (
+                        <TableRow key={sign.id}>
+                          <TableCell size="medium" align="left">{localDate(sign.created_at)}</TableCell>
+                          <TableCell size="medium" align="left">{sign.body_temperature}</TableCell>
+                          <TableCell size="medium" align="left">{sign.pulse_rate}</TableCell>
+                          <TableCell size="medium" align="left">{sign.blood_pressure}</TableCell>
+                          <TableCell size="medium" align="left">{sign.respiration_rate}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
                   </Table>
                 </TableContainer>
               </Grid>
@@ -91,6 +103,15 @@ const PersonalHelthRecord = ({ userId }) => {
                         <TableCell size="medium" align="left">Nội dung</TableCell>
                       </TableRow>
                     </TableHead>
+
+                    <TableBody>
+                      {user.diseaseProgressions.map((s) => (
+                        <TableRow key={s.id}>
+                          <TableCell size="medium" align="left">{localDate(s.date)}</TableCell>
+                          <TableCell size="medium" align="left">{s.content}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
                   </Table>
                 </TableContainer>
               </Grid>

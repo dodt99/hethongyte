@@ -61,8 +61,7 @@ const UpdateAppointmentAdmin = ({ appointment }) => {
         <Grid item xs={12}>
           <Button
             size="small"
-            color="secondary"
-            variant="outlined"
+            style={{ backgroundColor: 'rgba(0, 0, 0, 0.18)' }}
             className={classes.button}
             disabled={isLoading}
             onClick={() => updateAppointment(appointmentStatus.HUY_LICH)}
@@ -72,8 +71,7 @@ const UpdateAppointmentAdmin = ({ appointment }) => {
 
           <Button
             size="small"
-            color="primary"
-            variant="outlined"
+            style={{ backgroundColor: 'rgb(222, 100, 110)' }}
             className={classes.button}
             disabled={isLoading}
             onClick={() => updateAppointment(appointmentStatus.CHON_LICH_KHAC)}
@@ -83,8 +81,7 @@ const UpdateAppointmentAdmin = ({ appointment }) => {
 
           <Button
             size="small"
-            color="primary"
-            variant="outlined"
+            style={{ backgroundColor: 'rgb(165 199 24)' }}
             disabled={isLoading}
             onClick={() => updateAppointment(appointmentStatus.XAC_NHAN)}
           >

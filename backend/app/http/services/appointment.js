@@ -1,3 +1,4 @@
+const dayjs = require('dayjs');
 const appointmentStatus = require('../../enums/appointmentStatus');
 const { formatTimestamp } = require('../../helpers/dayjs');
 const { abort } = require('../../helpers/error');
@@ -93,8 +94,13 @@ exports.getMyAppointments = async ({ userId }) => {
 exports.getAppointmentList = async ({
   limit, offset, keyword, gender, status,
 }) => {
+  const startToday = new Date(dayjs().hour(0).minute(0).second(0));
+  const endToday = new Date(dayjs().hour(0).minute(0).second(0)
+    .add(1, 'day'));
+
   let appointments = Appointment.query()
     .leftJoin('users', 'appointments.patient_id', 'users.id')
+    .where('start_time', '>=', startToday).andWhere('start_time', '<=', endToday)
     .withGraphFetched('patient')
     .orderBy('appointments.start_time')
     .offset(offset)

@@ -77,15 +77,15 @@ const mapAppointmentData = (appointment) => ({
 const getBackgroundByStatus = (status) => {
   switch (status) {
     case appointmentStatus.CHO_XAC_NHAN:
-      return '#17a2b8';
+      return '#1976d2';
     case appointmentStatus.CHON_LICH_KHAC:
-      return '#6c757d';
+      return 'rgb(220, 0, 78)';
     case appointmentStatus.HUY_LICH:
-      return '#cccccc';
+      return 'rgba(0, 0, 0, 0.18)';
     case appointmentStatus.XAC_NHAN:
-      return '#28a745';
+      return 'rgb(165 199 24)';
     case appointmentStatus.DA_KHAM:
-      return '#72e946';
+      return '#28a745';
     default:
       return '';
   }

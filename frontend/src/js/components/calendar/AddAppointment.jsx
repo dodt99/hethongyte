@@ -53,6 +53,7 @@ const AddAppointment = () => {
     handleSubmit,
     control,
     watch,
+    reset,
   } = useForm({
     resolver: yupResolver(addAppointmentSchema),
     mode: 'onChange',
@@ -82,6 +83,7 @@ const AddAppointment = () => {
       enqueueSnackbar('Thêm lịch khám thành công', { variant: 'success' });
       await queryClient.invalidateQueries('appointments');
       await queryClient.invalidateQueries('my-appointments');
+      reset();
     },
     onError: (err) => {
       enqueueSnackbar(err.response.data && err.response.data.message, { variant: 'error' });

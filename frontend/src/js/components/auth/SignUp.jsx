@@ -6,9 +6,10 @@ import * as yup from 'yup';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { useHistory } from 'react-router-dom';
 import {
-  Box, Button, FormGroup, TextField,
+  Box, Button, FormGroup, TextField, Paper, Typography,
 } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
+import { makeStyles } from '@material-ui/styles';
 import { KeyboardDatePicker } from '@material-ui/pickers';
 
 import { setToken, api } from '../../helpers/axios';
@@ -26,7 +27,25 @@ const schema = yup.object().shape({
   job: yup.string().max(127).nullable(),
 });
 
+const useStyles = makeStyles((theme) => ({
+  input: {
+    marginBottom: theme.spacing(2),
+  },
+  paper: {
+    padding: theme.spacing(4),
+    width: '400px',
+  },
+  button: {
+    marginBottom: theme.spacing(2),
+  },
+  title: {
+    marginBottom: theme.spacing(4),
+    textAlign: 'center',
+  },
+}));
+
 const SignUp = () => {
+  const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
 
   const history = useHistory();
@@ -71,128 +90,152 @@ const SignUp = () => {
   };
 
   return (
-    <FormGroup>
-      <TextField
-        name="email"
-        label="Email"
-        autoComplete="off"
-        fullWidth
-        variant="outlined"
-        inputRef={register}
-        error={!!errors.email}
-        helperText={errors.email ? errors.email.message : ''}
-      />
+    <Paper className={classes.paper}>
+      <Typography variant="h3" className={classes.title}>SIGN UP</Typography>
 
-      <TextField
-        name="password"
-        type="password"
-        label="Mật khẩu"
-        autoComplete="off"
-        fullWidth
-        variant="outlined"
-        inputRef={register}
-        error={!!errors.password}
-        helperText={errors.password ? errors.password.message : ''}
-      />
+      <FormGroup>
+        <TextField
+          name="email"
+          label="Email"
+          autoComplete="off"
+          fullWidth
+          variant="outlined"
+          className={classes.input}
+          inputRef={register}
+          error={!!errors.email}
+          helperText={errors.email ? errors.email.message : ''}
+        />
 
-      <TextField
-        name="name"
-        label="Họ tên"
-        autoComplete="off"
-        fullWidth
-        variant="outlined"
-        inputRef={register}
-        error={!!errors.name}
-        helperText={errors.name ? errors.name.message : ''}
-      />
+        <TextField
+          name="password"
+          type="password"
+          label="Mật khẩu"
+          autoComplete="off"
+          fullWidth
+          className={classes.input}
+          variant="outlined"
+          inputRef={register}
+          error={!!errors.password}
+          helperText={errors.password ? errors.password.message : ''}
+        />
 
-      <Controller
-        name="gender"
-        control={control}
-        render={({ onChange, ...props }) => (
-          <Autocomplete
-            {...props}
-            id="gender"
-            size="small"
-            filterSelectedOptions
-            options={genderEnum.toArray() || []}
-            getOptionLabel={(option) => genderEnum.getTitle(option.value)}
-            renderInput={
-              (params) => <TextField {...params} label="Giới tính" variant="outlined" />
-            }
-            onChange={(_, val) => {
-              onChange(val);
-            }}
-          />
-        )}
-      />
+        <TextField
+          name="name"
+          label="Họ tên"
+          autoComplete="off"
+          fullWidth
+          className={classes.input}
+          variant="outlined"
+          inputRef={register}
+          error={!!errors.name}
+          helperText={errors.name ? errors.name.message : ''}
+        />
 
-      <TextField
-        name="tel"
-        label="Số điện thoại"
-        autoComplete="off"
-        fullWidth
-        variant="outlined"
-        inputRef={register}
-        error={!!errors.tel}
-        helperText={errors.tel ? errors.tel.message : ''}
-      />
+        <Controller
+          name="gender"
+          control={control}
+          render={({ onChange, ...props }) => (
+            <Autocomplete
+              {...props}
+              id="gender"
+              className={classes.input}
+              size="small"
+              filterSelectedOptions
+              options={genderEnum.toArray() || []}
+              getOptionLabel={(option) => genderEnum.getTitle(option.value)}
+              renderInput={
+                (params) => <TextField {...params} label="Giới tính" variant="outlined" />
+              }
+              onChange={(_, val) => {
+                onChange(val);
+              }}
+            />
+          )}
+        />
 
-      <Controller
-        render={({ onChange, ...props }) => (
-          <KeyboardDatePicker
-            {...props}
-            inputVariant="outlined"
-            label="Ngày sinh"
-            placeholder="dd-mm-yyyy"
-            name="birthday"
-            autoOk
-            format="DD-MM-YYYY"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            error={!!errors.birthday}
-            helperText={errors.birthday ? errors.birthday.message : ''}
-            onChange={(e) => onChange(e || null)}
-          />
-        )}
-        name="birthday"
-        control={control}
-      />
+        <TextField
+          name="tel"
+          label="Số điện thoại"
+          autoComplete="off"
+          className={classes.input}
+          fullWidth
+          variant="outlined"
+          inputRef={register}
+          error={!!errors.tel}
+          helperText={errors.tel ? errors.tel.message : ''}
+        />
 
-      <TextField
-        name="address"
-        label="Địa chỉ"
-        autoComplete="off"
-        fullWidth
-        variant="outlined"
-        inputRef={register}
-        error={!!errors.address}
-        helperText={errors.address ? errors.address.message : ''}
-      />
+        <Controller
+          render={({ onChange, ...props }) => (
+            <KeyboardDatePicker
+              {...props}
+              inputVariant="outlined"
+              label="Ngày sinh"
+              placeholder="dd-mm-yyyy"
+              name="birthday"
+              className={classes.input}
+              autoOk
+              format="DD-MM-YYYY"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              error={!!errors.birthday}
+              helperText={errors.birthday ? errors.birthday.message : ''}
+              onChange={(e) => onChange(e || null)}
+            />
+          )}
+          name="birthday"
+          control={control}
+        />
 
-      <TextField
-        name="job"
-        label="Nghề nghiệp"
-        autoComplete="off"
-        fullWidth
-        variant="outlined"
-        inputRef={register}
-        error={!!errors.job}
-        helperText={errors.job ? errors.job.message : ''}
-      />
+        <TextField
+          name="address"
+          label="Địa chỉ"
+          autoComplete="off"
+          className={classes.input}
+          fullWidth
+          variant="outlined"
+          inputRef={register}
+          error={!!errors.address}
+          helperText={errors.address ? errors.address.message : ''}
+        />
 
-      <Box justifyContent="flex-end" display="flex">
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={handleSubmit(onSubmit)}
-          disabled={isLoading}
-        >
-          {isLoading ? 'Loading...' : 'Sign Up'}
-        </Button>
-      </Box>
-    </FormGroup>
+        <TextField
+          name="job"
+          label="Nghề nghiệp"
+          className={classes.input}
+          autoComplete="off"
+          fullWidth
+          variant="outlined"
+          inputRef={register}
+          error={!!errors.job}
+          helperText={errors.job ? errors.job.message : ''}
+        />
+
+        <Box>
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={handleSubmit(onSubmit)}
+            className={classes.button}
+            disabled={isLoading}
+            fullWidth
+          >
+            {isLoading ? 'Loading...' : 'Sign Up'}
+          </Button>
+
+          <Button
+            color="primary"
+            variant="outlined"
+            onClick={() => history.push('/sign-in')}
+            fullWidth
+            className={classes.button}
+          >
+            SIGN IN
+          </Button>
+        </Box>
+      </FormGroup>
+    </Paper>
   );
 };
 

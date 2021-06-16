@@ -64,8 +64,18 @@ const MyAppointments = () => {
                 <TableCell size="medium" align="left">{`${formatLocalHour(appointment.start_time)} - ${formatLocalHour(appointment.end_time)}`}</TableCell>
                 <TableCell size="medium" align="left">{appointmentStatus.getTitle(appointment.status)}</TableCell>
                 <TableCell size="medium" align="left">
-                  <UpdateAppointment appointment={appointment} />
-                  <RemoveAppointment appointmentId={appointment.id} />
+                  {[
+                    appointmentStatus.XAC_NHAN,
+                    appointmentStatus.HUY_LICH,
+                    appointmentStatus.DA_KHAM,
+                  ].includes(appointment.status)
+                    ? null
+                    : (
+                      <>
+                        <UpdateAppointment appointment={appointment} />
+                        <RemoveAppointment appointmentId={appointment.id} />
+                      </>
+                    )}
                 </TableCell>
               </TableRow>
             ))}
