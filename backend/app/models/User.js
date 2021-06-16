@@ -7,6 +7,9 @@ class User extends Model {
 
   static get relationMappings() {
     const Position = require('./Position');
+    const Appointment = require('./Appointment');
+    const DiseaseProgression = require('./DiseaseProgression');
+    const VitalSign = require('./VitalSign');
 
     return {
       position: {
@@ -15,6 +18,30 @@ class User extends Model {
         join: {
           from: 'users.position_id',
           to: 'positions.id',
+        },
+      },
+      appointments: {
+        relation: Model.HasManyRelation,
+        modelClass: Appointment,
+        join: {
+          from: 'users.id',
+          to: 'appointments.patient_id',
+        },
+      },
+      diseaseProgressions: {
+        relation: Model.HasManyRelation,
+        modelClass: DiseaseProgression,
+        join: {
+          from: 'users.id',
+          to: 'disease_progressions.user_id',
+        },
+      },
+      vitalSigns: {
+        relation: Model.HasManyRelation,
+        modelClass: VitalSign,
+        join: {
+          from: 'users.id',
+          to: 'vital_signs.user_id',
         },
       },
     };

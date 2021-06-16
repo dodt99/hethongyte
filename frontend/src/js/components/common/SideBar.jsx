@@ -15,9 +15,10 @@ import { useHistory } from 'react-router-dom';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import GroupIcon from '@material-ui/icons/Group';
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import SettingsIcon from '@material-ui/icons/Settings';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import DateRangeIcon from '@material-ui/icons/DateRange';
 
 import { useAppStateContext, useAppStateDispatchContext } from '../../AppContext';
 import roleEnum from '../../enums/role';
@@ -63,8 +64,14 @@ const useStyles = makeStyles((theme) => ({
 
 const TABS = [
   {
-    url: '/dashboards',
-    roles: [roleEnum.ADMIN],
+    url: '/my-profile',
+    roles: [roleEnum.ADMIN, roleEnum.EMPLOYEE, roleEnum.PATIENT],
+    title: 'Hồ sơ cá nhân',
+    icon: <AccountBoxIcon color="secondary" />,
+  },
+  {
+    url: '/dashboard/appointments',
+    roles: [roleEnum.ADMIN, roleEnum.EMPLOYEE],
     title: 'Dashboard',
     icon: <AssessmentIcon color="secondary" />,
   },
@@ -72,7 +79,7 @@ const TABS = [
     url: '/calendar',
     roles: [roleEnum.ADMIN, roleEnum.EMPLOYEE, roleEnum.PATIENT],
     title: 'Lịch Khám',
-    icon: <CalendarTodayIcon color="secondary" />,
+    icon: <DateRangeIcon color="secondary" />,
   },
   {
     url: '/patients',

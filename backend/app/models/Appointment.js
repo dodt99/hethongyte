@@ -17,6 +17,14 @@ class Appointment extends Model {
           to: 'users.id',
         },
       },
+      doctor: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: User,
+        join: {
+          from: 'appointments.doctor_id',
+          to: 'users.id',
+        },
+      },
     };
   }
 }

@@ -22,6 +22,8 @@ import Patients from './pages/patient/Patients';
 import Employees from './pages/employee/Employees';
 import Positions from './pages/setting/Positions';
 import Calendar from './pages/calendar/Calendar';
+import Appointments from './pages/dashboard/Appointments';
+import MyProfile from './pages/profile/MyProfile';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -47,6 +49,8 @@ const Root = () => {
           <PrivateRoute path="/employees" component={Employees} />
           <PrivateRoute path="/calendar" component={Calendar} />
           <PrivateRoute path="/setting/positions" component={Positions} />
+          <PrivateRoute path="/dashboard/appointments" component={Appointments} />
+          <PrivateRoute path="/my-profile" component={MyProfile} />
 
           <Route path="*" exact component={ErrorPage} />
         </Switch>
